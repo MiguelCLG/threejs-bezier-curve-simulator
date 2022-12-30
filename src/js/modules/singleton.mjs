@@ -12,6 +12,7 @@ import Camera from "./camera.mjs";
 import Grid from "./grid.mjs";
 import GridBase from "./gridBase.mjs";
 import Information from "./information.mjs";
+import Point from "./point.mjs";
 import Renderer from "./renderer.mjs";
 /**
  * @class Singleton
@@ -36,6 +37,13 @@ export default class Singleton {
     this.camera = new Camera();
     this.renderer = new Renderer();
     this.grid = new GridBase(10);
+
+    this.c0 = new Point("c0", 0xFFFF00)
+    this.c1 = new Point("c1", 0xFF6600)
+    this.c2 = new Point("c2", 0xFF0000)
+    this.c3 = new Point("c3", 0x00FF00)
+    this.c4 = new Point("c4", 0x0000FF)
+
     this.mouse = new Mouse();
     this.keyboard = new Keyboard();
 
