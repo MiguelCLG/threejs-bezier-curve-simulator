@@ -1,0 +1,22 @@
+body { margin: 0 }
+
+#information {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: 1s auto ease-in-out;
+    color: white;
+    padding: 12px;
+    font-family: sans-serif;
+    overflow: scroll;
+}
+
+.dados {
+    border: 1px solid black;
+    padding: 0 8px 24px 8px;
+    margin-bottom: 12px;
+    background-color: rgba(99, 99, 99, 1);
+}

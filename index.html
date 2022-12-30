@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="src/css/style.css" />
+    <title>CG - E-folio B - Miguel Gonçalves 1901337</title>
+    <script type="module" src="./src/js/main.mjs"></script>
+</head>
+
+<body>
+    <div class="canvas-wrapper">
+        <div id="information" class="info-text">
+            <div class="dados">
+                <h3>Dados</h3>
+                <p class="last-clicked-text"></p>
+                <p class="selected-tiles"></p>
+                <p class="last-calculation-text"></p>
+                <label for="size-input">Tamanho da Grelha</label>
+                <input id="size-input" type="number" value="10" />
+                <input id="change-grid-btn" type="button" value="Reset" />
+            </div>
+            <div class="dados">
+                <h3>Controlos</h3>
+                <p><b style="color:orangered">X</b> - para marcar os pontos, após a seleção de dois pontos, o proximo <b style="color:orangered">X</b> carregado reseta os pontos
+                    selecionados.</p>
+                <p><b style="color:orangered">Backspace</b> - reseta a grelha e os pontos rasterizados.</p>
+            </div>
+            <div class="dados">
+                <h3>Orbit Controls</h3>
+                <p>Arrastar com o botão <b style="color:orangered">esquerdo</b> do rato - gira a perspectiva da camera </p>
+                <p>Arrastar com o botão <b style="color:orangered">direito</b> do rato - movimenta o plano </p>
+                <p><b style="color:orangered">Scroll</b> do rato - Zoom In/Out</p>
+            </div>
+        </div>
+        <canvas class="main-canvas"></canvas>
+    </div>
+</body>
+</html>
