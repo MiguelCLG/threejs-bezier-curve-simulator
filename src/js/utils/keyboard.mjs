@@ -62,8 +62,14 @@ export default class Keyboard {
         this.singleton.state.setPointPosition({ x, y, z })
         break;
       case "Backspace": break;
-      case "KeyW": break;
-      case "KeyS": break;
+      case "KeyW":
+        this.singleton.state.movePointUpwards();
+        delete this.canPress[key];
+        break;
+      case "KeyS":
+        this.singleton.state.movePointDownwards();
+        delete this.canPress[key];
+        break;
       case "KeyX": break;
       default: break;
     }

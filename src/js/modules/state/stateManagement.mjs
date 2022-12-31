@@ -22,4 +22,12 @@ export default class StateManagement {
         this.selectedPoint.pointObject.position.z = z;
         this.selectedPoint.pointObject.position.y = y;
     }
+
+    movePointUpwards() {
+        this.selectedPoint.pointObject.position.y += .1;
+    }
+
+    movePointDownwards(){
+        this.selectedPoint.pointObject.position.y -= .1;
+    }
 }
