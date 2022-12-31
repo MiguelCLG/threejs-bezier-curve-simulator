@@ -19,7 +19,7 @@ export default class Keyboard {
     this.singleton = new Singleton();
     this.scene = this.singleton.scene;
     this.camera = this.singleton.camera;
-
+    this.state = this.singleton.state;
     this.mouse = this.singleton.mouse;
     this.pointer = this.mouse.pointer;
     this.raycaster = new THREE.Raycaster();
@@ -40,40 +40,26 @@ export default class Keyboard {
   handleKeyboardInput(key)
   {
     this.canPress[key] = true;
-    const { anchorPoints } = this.singleton;
+    const { state } = this.singleton;
     switch (key)
     {
       case "Digit1":
-        anchorPoints.forEach((point) => {
-          if (point.name === "c0") point.selectPoint();
-          else point.unselectPoint();
-        })
+        this.state.setSelectedPoint("c0")
         break;
       case "Digit2": 
-        anchorPoints.forEach((point) => {
-          if (point.name === "c1") point.selectPoint();
-          else point.unselectPoint();
-        })
+        state.setSelectedPoint("c1")
         break;
       case "Digit3": 
-        anchorPoints.forEach((point) => {
-          if (point.name === "c2") point.selectPoint();
-          else point.unselectPoint();
-        })
+        state.setSelectedPoint("c2")
         break;
       case "Digit4": 
-        anchorPoints.forEach((point) => {
-          if (point.name === "c3") point.selectPoint();
-          else point.unselectPoint();
-        })
+        state.setSelectedPoint("c3")
         break;
       case "Digit5": 
-        anchorPoints.forEach((point) => {
-          if (point.name === "c4") point.selectPoint();
-          else point.unselectPoint();
-        })
+        state.setSelectedPoint("c4")
         break;
-      case "Space": break;
+      case "Space":
+        break;
       case "Backspace": break;
       case "KeyX": break;
       default: break;

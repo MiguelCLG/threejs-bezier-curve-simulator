@@ -8,11 +8,11 @@ export default class Point extends PointBase {
 
     selectPoint() {
         this.selected = true;
-        this.pointObject.material.transparent = true;
         this.pointObject.material.opacity = 1;
     }
 
     unselectPoint() {
+        this.selected = false;
         this.pointObject.material.opacity = 0.5;
     }
 }

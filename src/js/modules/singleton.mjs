@@ -14,6 +14,7 @@ import GridBase from "./gridBase.mjs";
 import Information from "./information.mjs";
 import Point from "./point.mjs";
 import Renderer from "./renderer.mjs";
+import StateManagement from "./state/stateManagement.mjs";
 /**
  * @class Singleton
  * Cria uma instancia desta class, usando o padrão de singleton para que haja apenas
@@ -38,6 +39,10 @@ export default class Singleton {
     this.renderer = new Renderer();
     this.grid = new GridBase(10);
 
+    // Class para manter a informação de estado separado, se quiser alterar o ponto selecionado
+    this.state = new StateManagement();
+
+    // Cria-se os pontos e registamos na memória como um array de modo a poder ter acesso
     this.anchorPoints = [];
     this.anchorPoints.push(new Point("c0", 0xFFFF00)); 
     this.anchorPoints.push(new Point("c1", 0xFF6600)); 
