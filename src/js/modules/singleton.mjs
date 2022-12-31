@@ -9,7 +9,6 @@ import Mouse from "../utils/mouse.mjs";
 import Tamanhos from "../utils/tamanhos.mjs";
 import Tempo from "../utils/tempo.mjs";
 import Camera from "./camera.mjs";
-import Grid from "./grid.mjs";
 import GridBase from "./gridBase.mjs";
 import Information from "./information.mjs";
 import Point from "./point.mjs";
