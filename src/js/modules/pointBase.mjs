@@ -10,7 +10,7 @@ export default class PointBase {
         this.color = color;
 
         //Randomizar a posição do ponto 
-        this.pointPosition = new THREE.Vector3(
+        this.initialPosition = new THREE.Vector3(
             RandomFloatRange(-10, 10),  // x
             RandomFloatRange(-10, 10),  // y
             RandomFloatRange(-1, 1)     // z
@@ -29,12 +29,11 @@ export default class PointBase {
         sphereMaterial.opacity = 0.7;
 
         let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        sphere.position.x = this.pointPosition.x;
-        sphere.position.y = this.pointPosition.y;
-        sphere.position.z = this.pointPosition.z;
+        sphere.position.x = this.initialPosition.x;
+        sphere.position.y = this.initialPosition.y;
+        sphere.position.z = this.initialPosition.z;
 
         this.pointObject = sphere;
         this.singleton.scene.add(sphere);
-
     }
 }

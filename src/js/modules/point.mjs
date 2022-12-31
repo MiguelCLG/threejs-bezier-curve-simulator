@@ -15,4 +15,8 @@ export default class Point extends PointBase {
         this.selected = false;
         this.pointObject.material.opacity = 0.5;
     }
+
+    changePosition() {
+        
+    }
 }

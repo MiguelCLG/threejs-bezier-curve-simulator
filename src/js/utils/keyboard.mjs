@@ -58,6 +58,8 @@ export default class Keyboard {
         state.setSelectedPoint("c4")
         break;
       case "Space":
+        const { x, y, z } = this.getRaycastPosition();
+        this.singleton.state.setPointPosition({ x, y, z })
         break;
       case "Backspace": break;
       case "KeyW": break;
@@ -67,36 +69,18 @@ export default class Keyboard {
     }
   }
 
-  // getTilePosition(key) {
-  //   // se for backspace dá reset à grid
-  //   if (key === "Backspace" || this.canPress[key]) {
-  //     this.canPress[key] = true;
-  //     this.singleton.grid.reset(true);
-  //     return;
-  //   }
+  getRaycastPosition() {
+    // "dispara" um raio entre a posição da camera relativa ao ponteiro do rato
+    this.raycaster.setFromCamera(this.pointer, this.camera.perspectiveCamera);
 
-  //   // se nao for X então evitamos de dar cast ao raycaster
-  //   if (key !== "KeyX" || this.canPress[key]) {
-  //     return;
-  //   }
-  //   // "dispara" um raio entre a posição da camera relativa ao ponteiro do rato
-  //   this.raycaster.setFromCamera(this.pointer, this.camera.perspectiveCamera);
+    // obtém os objectos interceptados
+    const intersects = this.raycaster.intersectObjects(this.scene.children);
 
-  //   // obtém os objectos interceptados
-  //   const intersects = this.raycaster.intersectObjects(this.scene.children);
-  //   const { grid } = this.singleton;
+    return intersects[0].point;
 
-  //   const { x, y } = intersects[0].point;
-  //   const tile = grid.getTile({
-  //     x: Math.round(x), // math.round porque queremos obter o inteiro
-  //     y: Math.round(y),
-  //   });
-  //   grid.selectTile(tile); // seleciona o tile
-
-  //   // dá update à informação
-  //   this.information.updateData({
-  //     lastClicked: `(${Math.round(x)}, ${Math.round(y)})`,
-  //   });
-  //   this.canPress[key] = true;
-  // }
+    // // dá update à informação
+    // this.information.updateData({
+    //   lastClicked: `(${Math.round(x)}, ${Math.round(y)})`,
+    // });
+  }
 }

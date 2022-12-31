@@ -7,12 +7,19 @@ export default class StateManagement {
         this.selectedPoint = null;
     }
     setSelectedPoint(pointName) {
+        //TODO: Adicionar o nome à informação para o user
         const { anchorPoints } = this.singleton;
         this.selectedPoint = anchorPoints.find(p => p.name === pointName);
-        console.log(this.selectedPoint);
         anchorPoints.forEach((point) => {
             if (point.name === pointName && !point.selected) point.selectPoint();
             else point.unselectPoint();
         });
+    }
+
+    setPointPosition(newPosition) {
+        const { x, y, z } = newPosition;
+        this.selectedPoint.pointObject.position.x = x;
+        this.selectedPoint.pointObject.position.z = z;
+        this.selectedPoint.pointObject.position.y = y;
     }
 }
