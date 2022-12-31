@@ -8,7 +8,8 @@ export default class StateManagement {
     }
     setSelectedPoint(pointName) {
         const { anchorPoints } = this.singleton;
-        this.selectedPoint = pointName;
+        this.selectedPoint = anchorPoints.find(p => p.name === pointName);
+        console.log(this.selectedPoint);
         anchorPoints.forEach((point) => {
             if (point.name === pointName && !point.selected) point.selectPoint();
             else point.unselectPoint();

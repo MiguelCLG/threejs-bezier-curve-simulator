@@ -5,7 +5,7 @@ import Singleton from "./singleton.mjs";
 export default class PointBase {
     constructor(name = "c0", color = 0xFFFFFF){
         this.singleton = new Singleton();
-        this.size = 0.5;
+        this.radius = 0.5;
         this.name = name;
         this.color = color;
 
@@ -19,7 +19,7 @@ export default class PointBase {
     }
 
     createPoint() {
-        let sphereGeometry = new THREE.SphereGeometry(this.size, 16, 16);
+        let sphereGeometry = new THREE.SphereGeometry(this.radius, 16, 16);
         let sphereMaterial = new THREE.MeshBasicMaterial({
             color: this.color,
             side: THREE.DoubleSide,

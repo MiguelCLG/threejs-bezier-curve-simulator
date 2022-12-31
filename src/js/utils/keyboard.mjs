@@ -19,7 +19,6 @@ export default class Keyboard {
     this.singleton = new Singleton();
     this.scene = this.singleton.scene;
     this.camera = this.singleton.camera;
-    this.state = this.singleton.state;
     this.mouse = this.singleton.mouse;
     this.pointer = this.mouse.pointer;
     this.raycaster = new THREE.Raycaster();
@@ -44,7 +43,7 @@ export default class Keyboard {
     switch (key)
     {
       case "Digit1":
-        this.state.setSelectedPoint("c0")
+        state.setSelectedPoint("c0")
         break;
       case "Digit2": 
         state.setSelectedPoint("c1")
@@ -61,6 +60,8 @@ export default class Keyboard {
       case "Space":
         break;
       case "Backspace": break;
+      case "KeyW": break;
+      case "KeyS": break;
       case "KeyX": break;
       default: break;
     }

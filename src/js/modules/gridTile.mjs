@@ -26,7 +26,7 @@ export default class GridTile {
     );
   }
 
-  createTile(x, y, z, tileSize, cor, zSize = 0) {
+  createTile(x, y, z, tileSize, cor) {
     let tileGeometry = new THREE.BoxGeometry(tileSize, tileSize, tileSize);
     let tileMaterial = new THREE.MeshBasicMaterial({
       color: cor,
