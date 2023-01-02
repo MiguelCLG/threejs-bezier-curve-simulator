@@ -14,27 +14,23 @@ function bezier4(bezierPointsAndTime){
     const { c0, c1, c2, c3, c4, t } = bezierPointsAndTime;
     
     // Equação fornecida no enunciado em ordem a x
-    const x = Math.pow(1-t, 4) * c0.x + 
-              4 * Math.pow(1 - t , 3)* t * c1.x + 
-              6 * Math.pow(1 - t, 2) * Math.pow(t, 2) * c2.x +
-              4 * (1 - t) * Math.pow(t, 3) * c3.x +
-              Math.pow(t, 4) * c4.y;
+    const x = QuarticBezierOnAxis(c0.x, c1.x, c2.x, c3.x, c4.x, t);
 
     // Equação fornecida no enunciado em ordem a y
-    const y = Math.pow(1-t, 4) * c0.y + 
-              4 * Math.pow(1 - t , 3)* t * c1.y + 
-              6 * Math.pow(1 - t, 2) * Math.pow(t, 2) * c2.y +
-              4 * (1 - t) * Math.pow(t, 3) * c3.y +
-              Math.pow(t, 4) * c4.y;
+    const y = QuarticBezierOnAxis(c0.y, c1.y, c2.y, c3.y, c4.y, t);
 
     // Equação fornecida no enunciado em ordem a z
-    const z = Math.pow(1-t, 4) * c0.z + 
-              4 * Math.pow(1 - t , 3)* t * c1.z + 
-              6 * Math.pow(1 - t, 2) * Math.pow(t, 2) * c2.z +
-              4 * (1 - t) * Math.pow(t, 3) * c3.z +
-              Math.pow(t, 4) * c4.z;
+    const z = QuarticBezierOnAxis(c0.z, c1.z, c2.z, c3.z, c4.z, t);
+
     return new THREE.Vector3(x, y, z);
 }
 
+function QuarticBezierOnAxis(c0, c1, c2, c3, c4, t){
+    return Math.pow(1-t, 4) * c0 + 
+    4 * Math.pow(1 - t , 3)* t * c1 + 
+    6 * Math.pow(1 - t, 2) * Math.pow(t, 2) * c2 +
+    4 * (1 - t) * Math.pow(t, 3) * c3 +
+    Math.pow(t, 4) * c4;
+}
 
 export { bezier4 };

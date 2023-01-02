@@ -70,7 +70,9 @@ export default class Keyboard {
         this.singleton.state.movePointDownwards();
         delete this.canPress[key];
         break;
-      case "KeyX": break;
+      case "KeyX": 
+        this.singleton.state.createBezier();
+      break;
       default: break;
     }
   }

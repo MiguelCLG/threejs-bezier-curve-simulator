@@ -43,11 +43,11 @@ export default class Singleton {
 
     // Cria-se os pontos e registamos na memória como um array de modo a poder ter acesso
     this.anchorPoints = [];
-    this.anchorPoints.push(new Point("c0", 0xFFFF00)); 
-    this.anchorPoints.push(new Point("c1", 0xFF6600)); 
-    this.anchorPoints.push(new Point("c2", 0xFF0000)); 
-    this.anchorPoints.push(new Point("c3", 0x00FF00)); 
-    this.anchorPoints.push(new Point("c4", 0x0000FF)); 
+    this.anchorPoints.push(new Point("c0", 0xFFFF00));
+    this.anchorPoints.push(new Point("c1", 0xFF6600));
+    this.anchorPoints.push(new Point("c2", 0xFF0000));
+    this.anchorPoints.push(new Point("c3", 0x00FF00));
+    this.anchorPoints.push(new Point("c4", 0x0000FF));
 
     this.mouse = new Mouse();
     this.keyboard = new Keyboard();

@@ -26,5 +26,5 @@ function TestBezierCurve() {
   let R = bezier4({c0, c1, c2, c3, c4, t});
   console.log(R);
 }
-// TestBezierCurve();
+TestBezierCurve();
 Initialize();
