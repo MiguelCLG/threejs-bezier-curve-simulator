@@ -13,7 +13,7 @@ export default class PointBase {
         this.initialPosition = new THREE.Vector3(
             RandomFloatRange(-10, 10),  // x
             RandomFloatRange(-10, 10),  // y
-            RandomFloatRange(-1, 1)     // z
+            0     // z
         );
         this.createPoint();
     }
@@ -35,5 +35,11 @@ export default class PointBase {
 
         this.pointObject = sphere;
         this.singleton.scene.add(sphere);
+    }
+
+    reset(){
+        this.pointObject.position.x = RandomFloatRange(-10, 10);
+        this.pointObject.position.y = RandomFloatRange(-10, 10);
+        this.pointObject.position.z = 0;
     }
 }

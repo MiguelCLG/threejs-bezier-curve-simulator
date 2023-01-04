@@ -21,7 +21,7 @@ import StateManagement from "./state/stateManagement.mjs";
  * @param canvas - canvas que vamos usar
  */
 export default class Singleton {
-  static instance; //jshint ignore:line
+  static instance; // instancia estática de criação do singleton
 
   constructor(canvas) {
     if (Singleton.instance) {

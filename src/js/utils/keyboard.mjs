@@ -59,9 +59,12 @@ export default class Keyboard {
         break;
       case "Space":
         const { x, y, z } = this.getRaycastPosition();
+        if(!x || !y || !z) return;
         this.singleton.state.setPointPosition({ x, y, z })
         break;
-      case "Backspace": break;
+      case "Backspace": 
+        this.singleton.state.reset();
+        break;
       case "KeyW":
         this.singleton.state.movePointUpwards();
         delete this.canPress[key];
@@ -83,6 +86,8 @@ export default class Keyboard {
 
     // obtém os objectos interceptados
     const intersects = this.raycaster.intersectObjects(this.scene.children);
+
+    if(intersects.length == 0) return { x: undefined, y: undefined, z: undefined };
 
     return intersects[0].point;
 
