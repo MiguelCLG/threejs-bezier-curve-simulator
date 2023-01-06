@@ -35,9 +35,10 @@ export default class Mouse extends EventEmitter {
   onPointerClick(mouseButton){
     if(mouseButton != 0 || this.singleton.state.selectedPoint === null) return;
 
-    const { x } = this.getRaycastPosition();
-    if(!x) return;
-    this.singleton.state.setPointPosition({ x, y: this.singleton.state.getPointPosition().y, z: this.singleton.state.getPointPosition().z });
+    const { x, y } = this.getRaycastPosition();
+    if(!x || !y) return;
+    this.singleton.state.setPointPosition({ x, y, z: this.singleton.state.getPointPosition().z });
+    this.singleton.information.updatePressedKey('MC');
   }
 
   getRaycastPosition() {

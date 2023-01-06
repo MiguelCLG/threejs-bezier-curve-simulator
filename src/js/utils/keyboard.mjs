@@ -38,44 +38,80 @@ export default class Keyboard {
 
   handleKeyboardInput(key)
   {
+    if(this.canPress[key]) return;
     this.canPress[key] = true;
     const { state } = this.singleton;
     switch (key)
     {
       case "Digit1":
-        state.setSelectedPoint("c0")
+        if(state.selectedPoint !== null && state.selectedPoint.name === 'c0') 
+          state.unselectPoint(state.selectedPoint)
+        else
+        {
+          state.setSelectedPoint("c0");
+          this.information.updatePressedKey('1');
+        }
         break;
       case "Digit2": 
-        state.setSelectedPoint("c1")
+        if(state.selectedPoint !== null && state.selectedPoint.name === 'c1') 
+          state.unselectPoint(state.selectedPoint)
+        else
+        {
+          state.setSelectedPoint("c1");
+          this.information.updatePressedKey('2');
+        }
         break;
-      case "Digit3": 
-        state.setSelectedPoint("c2")
+      case "Digit3":
+        if(state.selectedPoint !== null && state.selectedPoint.name === 'c2') 
+          state.unselectPoint(state.selectedPoint)
+        else
+        {
+          state.setSelectedPoint("c2");
+          this.information.updatePressedKey('3');
+        }
         break;
       case "Digit4": 
-        state.setSelectedPoint("c3")
+        if(state.selectedPoint !== null && state.selectedPoint.name === 'c3') 
+          state.unselectPoint(state.selectedPoint)
+        else
+        {
+          state.setSelectedPoint("c3");
+          this.information.updatePressedKey('4');
+        }
         break;
-      case "Digit5": 
-        state.setSelectedPoint("c4")
+      case "Digit5":
+        if(state.selectedPoint !== null && state.selectedPoint.name === 'c4') 
+          state.unselectPoint(state.selectedPoint)
+        else 
+        {  
+          state.setSelectedPoint("c4");
+          this.information.updatePressedKey('5');
+        }
         break;
       case "Space":
         const { x, y, z } = this.getRaycastPosition();
         if(!x || !y || !z) return;
         this.singleton.state.setPointPosition({ x, y, z })
+        this.information.updatePressedKey('SP');
         break;
       case "Backspace": 
         this.singleton.state.reset();
+        this.information.updatePressedKey('BS');
         break;
       case "KeyW":
         this.singleton.state.movePointUpwards();
         delete this.canPress[key];
+        this.information.updatePressedKey('W');
         break;
       case "KeyS":
         this.singleton.state.movePointDownwards();
         delete this.canPress[key];
+        this.information.updatePressedKey('S');
         break;
       case "KeyX": 
         this.singleton.state.createBezier();
-      break;
+        this.information.updatePressedKey('X');
+        break;
       default: break;
     }
   }
@@ -90,10 +126,5 @@ export default class Keyboard {
     if(intersects.length == 0) return { x: undefined, y: undefined, z: undefined };
 
     return intersects[0].point;
-
-    // // dá update à informação
-    // this.information.updateData({
-    //   lastClicked: `(${Math.round(x)}, ${Math.round(y)})`,
-    // });
   }
 }

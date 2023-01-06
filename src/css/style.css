@@ -20,3 +20,18 @@ body { margin: 0 }
     margin-bottom: 12px;
     background-color: rgba(99, 99, 99, 1);
 }
+
+.button-clicked{
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    height: 64px;
+    width: 64px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: rgba(200,200,200,.5);
+    color: white;
+    font-size: 50px;
+    font-family: monospace;
+    opacity: 0;
+}
