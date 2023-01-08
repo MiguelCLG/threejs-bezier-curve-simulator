@@ -1,16 +1,16 @@
 /*
     efolioB - Curvas de Bézier  
-    Miguel Gonçalves 1901337 - 10/01/2023
+    Miguel Gonçalves 1901337 - 09/01/2023
 */
 
-import Singleton from "./singleton.mjs";
+import Singleton from "../singleton.mjs";
 import GridTile from "./gridTile.mjs";
 
 /**
  *
  * @export
- * @class Grid
- * Gere a grelha em que vamos usar o algoritmo do ponto medio
+ * @class GridBase
+ * Gere o plano em grelha
  */
 export default class GridBase {
   tileColor1 = 0xef9a70;
@@ -43,8 +43,7 @@ export default class GridBase {
     }
     return tiles;
   }
-  // dá reset à estrutura de dados e à grelha
-  // se clearRasterized é true, então limpa também os tiles rasterizados
+  // dá reset à estrutura de dados e à grelhas
   reset() {
     this.tiles.forEach(({ tile }) => this.scene.remove(tile));
     this.tiles = this.createGrid(this.size, this.tileColor1, this.tileColor2);

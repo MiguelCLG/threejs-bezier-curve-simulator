@@ -1,6 +1,6 @@
 /*
     efolioB - Curvas de Bézier  
-    Miguel Gonçalves 1901337 - 10/01/2023
+    Miguel Gonçalves 1901337 - 09/01/2023
 */
 
 import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
@@ -8,11 +8,11 @@ import Keyboard from "../utils/keyboard.mjs";
 import Mouse from "../utils/mouse.mjs";
 import Tamanhos from "../utils/tamanhos.mjs";
 import Tempo from "../utils/tempo.mjs";
-import Camera from "./camera.mjs";
-import GridBase from "./gridBase.mjs";
+import Camera from "./threeSetup/camera.mjs";
+import GridBase from "./grid/gridBase.mjs";
 import Information from "./information.mjs";
-import Point from "./point.mjs";
-import Renderer from "./renderer.mjs";
+import Point from "./point/point.mjs";
+import Renderer from "./threeSetup/renderer.mjs";
 import StateManagement from "./state/stateManagement.mjs";
 /**
  * @class Singleton
@@ -42,12 +42,12 @@ export default class Singleton {
     this.state = new StateManagement();
 
     // Cria-se os pontos e registamos na memória como um array de modo a poder ter acesso
-    this.anchorPoints = [];
-    this.anchorPoints.push(new Point("c0", 0xFFFF00));
-    this.anchorPoints.push(new Point("c1", 0xFF6600));
-    this.anchorPoints.push(new Point("c2", 0xFF0000));
-    this.anchorPoints.push(new Point("c3", 0x00FF00));
-    this.anchorPoints.push(new Point("c4", 0x0000FF));
+    this.points = [];
+    this.points.push(new Point("c0", 0xffff00));
+    this.points.push(new Point("c1", 0xff6600));
+    this.points.push(new Point("c2", 0xff0000));
+    this.points.push(new Point("c3", 0x00ff00));
+    this.points.push(new Point("c4", 0x0000ff));
 
     this.mouse = new Mouse();
     this.keyboard = new Keyboard();
@@ -77,6 +77,6 @@ export default class Singleton {
   update() {
     this.renderer.update();
     this.information.update();
-    this.anchorPoints.forEach((point) => point.update());
+    this.points.forEach((point) => point.update());
   }
 }

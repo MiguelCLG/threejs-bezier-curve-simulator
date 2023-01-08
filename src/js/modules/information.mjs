@@ -1,6 +1,6 @@
 /*
     efolioB - Curvas de Bézier  
-    Miguel Gonçalves 1901337 - 10/01/2023
+    Miguel Gonçalves 1901337 - 09/01/2023
 */
 
 import Singleton from "./singleton.mjs";
@@ -32,8 +32,7 @@ export default class Information {
   updateData(infoData) {
     this.informationData = {
       point: infoData.point || this.informationData.point,
-      coordenates:
-        infoData.coordenates || this.informationData.coordenates,
+      coordenates: infoData.coordenates || this.informationData.coordenates,
     };
   }
 
@@ -42,9 +41,9 @@ export default class Information {
     this.coordenates.innerText = `Coordenadas: ${this.informationData.coordenates}`;
   }
 
-  updatePressedKey(key){
+  updatePressedKey(key) {
     this.keyPressed.style.opacity = 0.5;
-    this.keyPressed.innerText= key;
+    this.keyPressed.innerText = key;
   }
 
   update() {

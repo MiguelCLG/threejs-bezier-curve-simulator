@@ -1,6 +1,6 @@
 /*
     efolioB - Curvas de Bézier  
-    Miguel Gonçalves 1901337 - 10/01/2023
+    Miguel Gonçalves 1901337 - 09/01/2023
 */
 
 import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
@@ -12,6 +12,7 @@ import Singleton from "../modules/singleton.mjs";
  * @class Mouse
  * @extends {EventEmitter}
  * Gere a posição do rato num vector para ser acedido sempre que necessário
+ * Gere também as funcionalidades do Rato (Mouse click)
  */
 export default class Mouse extends EventEmitter {
   constructor() {
@@ -22,8 +23,13 @@ export default class Mouse extends EventEmitter {
 
     this.raycaster = new THREE.Raycaster();
     this.pointer = new THREE.Vector2();
+
+    // Evento para a posição do ponteiro
     document.body.addEventListener("pointermove", (e) => this.onPointerMove(e));
-    document.body.addEventListener("pointerdown", (e) => this.onPointerClick(e.button));
+    // Evento para a quando o rato é clicado
+    document.body.addEventListener("pointerdown", (e) =>
+      this.onPointerClick(e.button)
+    );
   }
 
   onPointerMove(evento) {
@@ -32,13 +38,24 @@ export default class Mouse extends EventEmitter {
     this.pointer.setY(-(evento.clientY / window.innerHeight) * 2 + 1);
   }
 
-  onPointerClick(mouseButton){
-    if(mouseButton != 0 || this.singleton.state.selectedPoint === null) return;
+  onPointerClick(mouseButton) {
+    if (mouseButton != 0 || this.singleton.state.selectedPoint === null) return;
 
+    // vai buscar a posição do rato com um raycast
     const { x, y } = this.getRaycastPosition();
-    if(!x || !y) return;
-    this.singleton.state.setPointPosition({ x, y, z: this.singleton.state.getPointPosition().z });
-    this.singleton.information.updatePressedKey('MC');
+
+    //caso estes sejam undefined, retorna
+    if (!x || !y) return;
+
+    // como queremos manter a posição do eixo dos Z, usamos a posição que temos guardada em estado
+    this.singleton.state.setPointPosition({
+      x,
+      y,
+      z: this.singleton.state.getPointPosition().z,
+    });
+
+    // dá update à informação
+    this.singleton.information.updatePressedKey("MC");
   }
 
   getRaycastPosition() {
@@ -47,8 +64,10 @@ export default class Mouse extends EventEmitter {
 
     // obtém os objectos interceptados
     const intersects = this.raycaster.intersectObjects(this.scene.children);
-    
-    if(intersects.length == 0) return { x: undefined, y: undefined, z: undefined };
+
+    // caso não haja interceções, retorna undefined para cada um dos seus elementos de vector
+    if (intersects.length == 0)
+      return { x: undefined, y: undefined, z: undefined };
 
     return intersects[0].point;
   }

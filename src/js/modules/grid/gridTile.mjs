@@ -1,6 +1,6 @@
 /*
     efolioB - Curvas de Bézier  
-    Miguel Gonçalves 1901337 - 10/01/2023
+    Miguel Gonçalves 1901337 - 09/01/2023
 */
 
 import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
@@ -9,7 +9,7 @@ import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
  *
  * @export
  * @class GridTile
- * Estrutura de dados do tile da grid, é gerido pela Grid
+ * Estrutura de dados do tile da grid, é gerido pela GridBase
  * Recebe o seu tamanho, posicao e cor
  */
 export default class GridTile {
@@ -32,7 +32,7 @@ export default class GridTile {
       color: cor,
     });
 
-    tileMaterial.opacity = 0.1;
+    tileMaterial.opacity = 0.3;
     tileMaterial.transparent = true;
 
     let tile = new THREE.Mesh(tileGeometry, tileMaterial);

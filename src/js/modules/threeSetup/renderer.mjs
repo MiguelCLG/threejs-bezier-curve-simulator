@@ -1,10 +1,10 @@
 /*
     efolioB - Curvas de Bézier  
-    Miguel Gonçalves 1901337 - 10/01/2023
+    Miguel Gonçalves 1901337 - 09/01/2023
 */
 
 import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
-import Singleton from "./singleton.mjs";
+import Singleton from "../singleton.mjs";
 
 /**
  *

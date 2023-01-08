@@ -1,6 +1,6 @@
 /*
     efolioB - Curvas de Bézier  
-    Miguel Gonçalves 1901337 - 10/01/2023
+    Miguel Gonçalves 1901337 - 09/01/2023
 */
 
 import { EventEmitter } from "https://unpkg.com/@dekkai/event-emitter";

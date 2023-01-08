@@ -1,6 +1,6 @@
 /*
     efolioB - Curvas de Bézier  
-    Miguel Gonçalves 1901337 - 10/01/2023
+    Miguel Gonçalves 1901337 - 09/01/2023
 */
 
 import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
@@ -36,83 +36,82 @@ export default class Keyboard {
     );
   }
 
-  handleKeyboardInput(key)
-  {
-    if(this.canPress[key]) return;
+  handleKeyboardInput(key) {
+    // Se a tecla estiver continuamente a ser premida retorna para que não haja side effects
+    // No entanto mais abaixo removemos a tecla caso seja W ou S, pois aí a nossa intenção é que seja continuamente premida
+    if (this.canPress[key]) return;
     this.canPress[key] = true;
+
+    // vamos buscar o state ao singleton que contém todas as funcionalidades que pretendemos utilizar
     const { state } = this.singleton;
-    switch (key)
-    {
+
+    switch (key) {
       case "Digit1":
-        if(state.selectedPoint !== null && state.selectedPoint.name === 'c0') 
-          state.unselectPoint(state.selectedPoint)
-        else
-        {
+        if (state.selectedPoint !== null && state.selectedPoint.name === "c0")
+          state.unselectPoint(state.selectedPoint);
+        else {
           state.setSelectedPoint("c0");
-          this.information.updatePressedKey('1');
+          this.information.updatePressedKey("1");
         }
         break;
-      case "Digit2": 
-        if(state.selectedPoint !== null && state.selectedPoint.name === 'c1') 
-          state.unselectPoint(state.selectedPoint)
-        else
-        {
+      case "Digit2":
+        if (state.selectedPoint !== null && state.selectedPoint.name === "c1")
+          state.unselectPoint(state.selectedPoint);
+        else {
           state.setSelectedPoint("c1");
-          this.information.updatePressedKey('2');
+          this.information.updatePressedKey("2");
         }
         break;
       case "Digit3":
-        if(state.selectedPoint !== null && state.selectedPoint.name === 'c2') 
-          state.unselectPoint(state.selectedPoint)
-        else
-        {
+        if (state.selectedPoint !== null && state.selectedPoint.name === "c2")
+          state.unselectPoint(state.selectedPoint);
+        else {
           state.setSelectedPoint("c2");
-          this.information.updatePressedKey('3');
+          this.information.updatePressedKey("3");
         }
         break;
-      case "Digit4": 
-        if(state.selectedPoint !== null && state.selectedPoint.name === 'c3') 
-          state.unselectPoint(state.selectedPoint)
-        else
-        {
+      case "Digit4":
+        if (state.selectedPoint !== null && state.selectedPoint.name === "c3")
+          state.unselectPoint(state.selectedPoint);
+        else {
           state.setSelectedPoint("c3");
-          this.information.updatePressedKey('4');
+          this.information.updatePressedKey("4");
         }
         break;
       case "Digit5":
-        if(state.selectedPoint !== null && state.selectedPoint.name === 'c4') 
-          state.unselectPoint(state.selectedPoint)
-        else 
-        {  
+        if (state.selectedPoint !== null && state.selectedPoint.name === "c4")
+          state.unselectPoint(state.selectedPoint);
+        else {
           state.setSelectedPoint("c4");
-          this.information.updatePressedKey('5');
+          this.information.updatePressedKey("5");
         }
         break;
       case "Space":
         const { x, y, z } = this.getRaycastPosition();
-        if(!x || !y || !z) return;
-        this.singleton.state.setPointPosition({ x, y, z })
-        this.information.updatePressedKey('SP');
+        if (!x || !y || !z) return;
+        this.singleton.state.setPointPosition({ x, y, z });
+        this.information.updatePressedKey("SP");
         break;
-      case "Backspace": 
+      case "Backspace":
         this.singleton.state.reset();
-        this.information.updatePressedKey('BS');
+        this.information.updatePressedKey("BS");
         break;
       case "KeyW":
         this.singleton.state.movePointUpwards();
         delete this.canPress[key];
-        this.information.updatePressedKey('W');
+        this.information.updatePressedKey("W");
         break;
       case "KeyS":
         this.singleton.state.movePointDownwards();
         delete this.canPress[key];
-        this.information.updatePressedKey('S');
+        this.information.updatePressedKey("S");
         break;
-      case "KeyX": 
+      case "KeyX":
         this.singleton.state.createBezier();
-        this.information.updatePressedKey('X');
+        this.information.updatePressedKey("X");
         break;
-      default: break;
+      default:
+        break;
     }
   }
 
@@ -123,7 +122,8 @@ export default class Keyboard {
     // obtém os objectos interceptados
     const intersects = this.raycaster.intersectObjects(this.scene.children);
 
-    if(intersects.length == 0) return { x: undefined, y: undefined, z: undefined };
+    if (intersects.length == 0)
+      return { x: undefined, y: undefined, z: undefined };
 
     return intersects[0].point;
   }

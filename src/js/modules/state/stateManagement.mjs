@@ -1,119 +1,169 @@
+/*
+    efolioB - Curvas de Bézier  
+    Miguel Gonçalves 1901337 - 09/01/2023
+*/
+
 import Singleton from "../singleton.mjs";
-import QuarticBezierCurve from '../quarticBezierCurve.mjs';
+import QuarticBezierCurve from "./quarticBezierCurve.mjs";
 import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
 import { RandomIntRangeInclusive } from "../../utils/utils-functions.mjs";
+import { colors } from "../../utils/constants.mjs";
+
+/**
+ *
+ * @export
+ * @class StateManagement
+ *
+ * Gere as funcionalidades do mundo criado e as informações mais relevantes que sejam utilizadas por outras classes. É apenas criado pelo singleton.
+ * É responsável por selecionar e descelecionar pontos.
+ * É responsável pelo movimento dos pontos.
+ * É responsável por criar as curvas de bezier de acordo com a posição dos pontos.
+ */
 
 export default class StateManagement {
-    constructor()
-    {
-        this.singleton = new Singleton();
-        this.selectedPoint = null;
-        this.curves = [];
-        this.curvesColor = [
-            0xff0000,
-            0xffffff,
-            0xff00ff,
-            0x00ffff,
-            0x0000ff,
-            0x333333,
-            0xff0077
-        ]
-    }
+  constructor() {
+    this.singleton = new Singleton();
 
-    createBezier()
-    {
-    
-        const { anchorPoints } = this.singleton;
+    // estado do ponto selecionado
+    this.selectedPoint = null;
 
-        const c0 = anchorPoints[0].pointObject.position;
-        const c1 = anchorPoints[1].pointObject.position;
-        const c2 = anchorPoints[2].pointObject.position;
-        const c3 = anchorPoints[3].pointObject.position;
-        const c4 = anchorPoints[4].pointObject.position;
+    // array de curvas criadas (ajuda para depois poder fazer reset)
+    this.curves = [];
+  }
 
-        const curve = new QuarticBezierCurve(
-            c0, c1, c2, c3, c4
-        );
-        
-        const geometry = new THREE.TubeGeometry( curve, 100, .3, 8, false );
-        const material = new THREE.MeshBasicMaterial( { color: this.curvesColor[RandomIntRangeInclusive(0, this.curvesColor.length)] } );
-        const mesh = new THREE.Mesh( geometry, material );
+  // Criação da curva de bezier
+  createBezier() {
+    const { points } = this.singleton;
 
-        this.curves.push(mesh);
-        this.singleton.scene.add( mesh );
-    }
+    // vai buscar a posição dos pontos na cena
+    const c0 = points[0].pointObject.position;
+    const c1 = points[1].pointObject.position;
+    const c2 = points[2].pointObject.position;
+    const c3 = points[3].pointObject.position;
+    const c4 = points[4].pointObject.position;
 
-    getPointPosition(){
-        return this.selectedPoint.pointObject.position;
-    }
+    // cria a curva de bezier usando a os pontos na cena
+    const curve = new QuarticBezierCurve(c0, c1, c2, c3, c4);
 
-    setSelectedPoint(pointName) {
-        //TODO: Adicionar o nome à informação para o user
-        const { anchorPoints } = this.singleton;
-        anchorPoints.forEach((point) => {
-            this.unselectPoint(point); 
-        });
-        this.selectedPoint = anchorPoints.find(p => p.name === pointName);
-        this.selectedPoint.selectPoint();
-        this.singleton.information.updateData({
-            point: this.selectedPoint.name,
-            coordenates: `(${this.selectedPoint.pointObject.position.x.toFixed(2)}, ${this.selectedPoint.pointObject.position.y.toFixed(2)}, ${this.selectedPoint.pointObject.position.z.toFixed(2)})`
-        });
-    }
+    // criação da geometria, material e mesh
+    const geometry = new THREE.TubeGeometry(curve, 100, 0.3, 8, false);
+    const material = new THREE.MeshBasicMaterial({
+      color: colors[RandomIntRangeInclusive(0, colors.length)],
+    });
+    const mesh = new THREE.Mesh(geometry, material);
 
-    unselectPoint(point) {
-        if(!point.selected && this.selectedPoint === null) return;
-        this.selectedPoint = null;
-        point.unselectPoint(); 
-        this.singleton.information.updateData({
-            point: "N/A",
-            coordenates: `N/A`
-        });
-    }
+    // adicionamos a curva ao array e depois à cena
+    this.curves.push(mesh);
+    this.singleton.scene.add(mesh);
+  }
 
-    setPointPosition(newPosition) {
-        if(!this.selectedPoint) return;
-        const { x, y, z } = newPosition;
-        this.selectedPoint.pointObject.position.x = x;
-        this.selectedPoint.pointObject.position.z = z;
-        this.selectedPoint.pointObject.position.y = y;
-        this.singleton.information.updateData({
-            point: this.selectedPoint.name,
-            coordenates: `(${this.selectedPoint.pointObject.position.x.toFixed(2)}, ${this.selectedPoint.pointObject.position.y.toFixed(2)}, ${this.selectedPoint.pointObject.position.z.toFixed(2)})`
-        })
-    }
+  // retorna a posição do ponto selecionado
+  getPointPosition() {
+    return this.selectedPoint.pointObject.position;
+  }
 
-    movePointUpwards() {
-        if(!this.selectedPoint) return;
-        this.selectedPoint.pointObject.position.z += .1;
-        this.singleton.information.updateData({
-            point: this.selectedPoint.name,
-            coordenates: `(${this.selectedPoint.pointObject.position.x.toFixed(2)}, ${this.selectedPoint.pointObject.position.y.toFixed(2)}, ${this.selectedPoint.pointObject.position.z.toFixed(2)})`
-        })
-    }
+  setSelectedPoint(pointName) {
+    const { points } = this.singleton;
+    // descelecionamos todos os pontos para evitar bugs
+    // TODO: fazer isto mais performant, consegues com um if Miguel!!
+    points.forEach((point) => {
+      this.unselectPoint(point);
+    });
 
-    movePointDownwards(){
-        if(!this.selectedPoint) return;
-        this.selectedPoint.pointObject.position.z -= .1;
-        this.singleton.information.updateData({
-            point: this.selectedPoint.name,
-            coordenates: `(${this.selectedPoint.pointObject.position.x.toFixed(2)}, ${this.selectedPoint.pointObject.position.y.toFixed(2)}, ${this.selectedPoint.pointObject.position.z.toFixed(2)})`
-        })
-    }
+    this.selectedPoint = points.find((p) => p.name === pointName);
+    this.selectedPoint.selectPoint();
 
-    clearCurves() {
-        this.curves.forEach((curve) =>
-            this.singleton.scene.remove(curve)
-        )
-        this.curves = [];
-        this.singleton.information.updateData({
-            point: `N/A`,
-            coordenates: `N/A`
-        })
-    }
+    const { x, y, z } = this.selectedPoint.pointObject.position;
+    // dá update à informação sobre o ponto selecionado e a sua posição, para questões de limpeza, decidi apenas deixar 2 casas decimais
+    //TODO: se calhar deverias aumentar, talvez 4 devem ter uma precisão melhor e nao impacta tanto o UI
+    this.singleton.information.updateData({
+      point: this.selectedPoint.name,
+      coordenates: `(${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`,
+    });
+  }
 
-    reset(){
-        this.clearCurves();
-        this.singleton.anchorPoints.forEach((point) => point.reset());
-    }
+  // desceleciona o ponto recebido
+  unselectPoint(point) {
+    // se não existe ponto selecionado, retorna
+    if (!point.selected && this.selectedPoint === null) return;
+
+    this.selectedPoint = null;
+    point.unselectPoint();
+
+    // dá update à informação
+    this.singleton.information.updateData({
+      point: "N/A",
+      coordenates: `N/A`,
+    });
+  }
+
+  // movimenta o ponto selecionado para uma nova posição recebida
+  setPointPosition(newPosition) {
+    // se não existe ponto selecionado, retorna
+    if (!this.selectedPoint) return;
+
+    // damos assign às posições nos eixos
+    this.selectedPoint.pointObject.position.x = newPosition.x;
+    this.selectedPoint.pointObject.position.z = newPosition.z;
+    this.selectedPoint.pointObject.position.y = newPosition.y;
+
+    const { x, y, z } = this.selectedPoint.pointObject.position;
+
+    // dá update à informação
+    this.singleton.information.updateData({
+      point: this.selectedPoint.name,
+      coordenates: `(${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`,
+    });
+  }
+
+  // move o ponto positivamente
+  movePointUpwards() {
+    // se não existe ponto selecionado, retorna
+    if (!this.selectedPoint) return;
+
+    // queremos apenas mover no eixo dos z
+    this.selectedPoint.pointObject.position.z += 0.1;
+
+    const { x, y, z } = this.selectedPoint.pointObject.position;
+
+    // dá update à informação
+    this.singleton.information.updateData({
+      point: this.selectedPoint.name,
+      coordenates: `(${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`,
+    });
+  }
+
+  // move o ponto negativamente
+  movePointDownwards() {
+    // se não existe ponto selecionado, retorna
+    if (!this.selectedPoint) return;
+
+    // queremos apenas mover no eixo dos z
+    this.selectedPoint.pointObject.position.z -= 0.1;
+
+    // queremos apenas mover no eixo dos z
+    const { x, y, z } = this.selectedPoint.pointObject.position;
+
+    // dá update à informação
+    this.singleton.information.updateData({
+      point: this.selectedPoint.name,
+      coordenates: `(${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`,
+    });
+  }
+
+  // Remove as curvas e dá clean ao UI
+  clearCurves() {
+    this.curves.forEach((curve) => this.singleton.scene.remove(curve));
+    this.curves = [];
+    this.singleton.information.updateData({
+      point: `N/A`,
+      coordenates: `N/A`,
+    });
+  }
+
+  // Remoção de curvas e randomiza os pontos, chamando a função reset deles
+  reset() {
+    this.clearCurves();
+    this.singleton.points.forEach((point) => point.reset());
+  }
 }
