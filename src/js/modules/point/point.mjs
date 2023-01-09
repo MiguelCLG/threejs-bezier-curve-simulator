@@ -38,14 +38,14 @@ export default class Point extends PointBase {
 
     const points = [];
     points.push(
-      new THREE.Vector3(
+      new THREE.Vector3( // posição do ponto
         this.pointObject.position.x,
         this.pointObject.position.y,
         this.pointObject.position.z
       )
     );
     points.push(
-      new THREE.Vector3(
+      new THREE.Vector3( // posição do plano
         this.pointObject.position.x,
         this.pointObject.position.y,
         0

@@ -38,6 +38,7 @@ export default class StateManagement {
     const { points } = this.singleton;
 
     // vai buscar a posição dos pontos na cena
+    // NOTA: se queremos estender para adicionar mais pontos (por exemplo 50 pontos), possívelmente seria melhor criar um sistema de geração de pontos, mas como são apenas 5, isto é o suficiente.
     const c0 = points[0].pointObject.position;
     const c1 = points[1].pointObject.position;
     const c2 = points[2].pointObject.position;
@@ -67,17 +68,17 @@ export default class StateManagement {
   setSelectedPoint(pointName) {
     const { points } = this.singleton;
     // descelecionamos todos os pontos para evitar bugs
-    // TODO: fazer isto mais performant, consegues com um if Miguel!!
-    points.forEach((point) => {
-      this.unselectPoint(point);
-    });
+
+    if (this.selectedPoint)
+      points.forEach((point) => {
+        this.unselectPoint(point);
+      });
 
     this.selectedPoint = points.find((p) => p.name === pointName);
     this.selectedPoint.selectPoint();
 
     const { x, y, z } = this.selectedPoint.pointObject.position;
-    // dá update à informação sobre o ponto selecionado e a sua posição, para questões de limpeza, decidi apenas deixar 2 casas decimais
-    //TODO: se calhar deverias aumentar, talvez 4 devem ter uma precisão melhor e nao impacta tanto o UI
+    // dá update à informação sobre o ponto selecionado e a sua posição, para questões de limpeza, decidi apenas deixar 2 casas decimais.
     this.singleton.information.updateData({
       point: this.selectedPoint.name,
       coordenates: `(${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`,
@@ -155,9 +156,12 @@ export default class StateManagement {
     });
   }
 
+  // timer para saber se as teclas W ou S estão constantemente a ser premidas (keydown)
   updateTimer() {
     this.timer += 0.016;
   }
+
+  // chamado quando as teclas W ou S são soltas (keyup)
   resetTimer() {
     this.timer = 0;
   }
@@ -177,6 +181,7 @@ export default class StateManagement {
     this.clearCurves();
     this.singleton.points.forEach((point) => point.reset());
   }
+
   update() {
     if (this.timer > 1) {
       this.moveSpeed = 0.5;

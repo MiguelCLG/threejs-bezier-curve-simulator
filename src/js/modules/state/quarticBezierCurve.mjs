@@ -3,13 +3,11 @@ import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
 
 /**
  * Referencia: https://threejs.org/docs/#api/en/geometries/TubeGeometry
- *             https://github.com/mrdoob/three.js/blob/dev/src/extras/curves/CubicBezierCurve3.js
- *						 https://github.com/mrdoob/three.js/blob/dev/src/extras/core/Curve.js
  * @class QuarticBezierCurve
  * @extends {THREE.Curve}
  *
  * Extendemos a class curve como no exemplo da documentação da Tube Geometry
- * Utilizamos também o metodo que encontramos no código fonte da THREE para a implementação da CubicBezier
+ *
  */
 class QuarticBezierCurve extends THREE.Curve {
   constructor(

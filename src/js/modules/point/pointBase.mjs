@@ -14,8 +14,14 @@ export default class PointBase {
     this.radius = 0.5;
     this.name = name;
     this.color = color;
-
+    this.gridSize = this.singleton.grid.size;
     this.createPoint();
+
+    // adiciono um event listener para o click do botao Reset para aumentar o range da posição dos pontos
+    const botaoReset = document.getElementById("change-grid-btn");
+    botaoReset.addEventListener("click", () =>
+      this.changeGridSize(document.getElementById("size-input").value)
+    );
   }
 
   // cria o ponto na cena
@@ -34,8 +40,8 @@ export default class PointBase {
 
     //Escolher a posição do ponto aleatóriamente
     let initialPosition = new THREE.Vector3(
-      RandomFloatRange(-10, 10), // x
-      RandomFloatRange(-10, 10), // y
+      RandomFloatRange(-this.gridSize, this.gridSize), // x
+      RandomFloatRange(-this.gridSize, this.gridSize), // y
       0 // z
     );
 
@@ -48,10 +54,22 @@ export default class PointBase {
     this.pointObject = sphere;
     this.singleton.scene.add(sphere);
   }
+
+  changeGridSize(newSize) {
+    this.gridSize = newSize;
+    this.singleton.state.reset();
+  }
+
   // Reseta a posição do ponto usando as funções utilitárias
   reset() {
-    this.pointObject.position.x = RandomFloatRange(-10, 10);
-    this.pointObject.position.y = RandomFloatRange(-10, 10);
+    this.pointObject.position.x = RandomFloatRange(
+      -this.gridSize,
+      this.gridSize
+    );
+    this.pointObject.position.y = RandomFloatRange(
+      -this.gridSize,
+      this.gridSize
+    );
     this.pointObject.position.z = 0;
   }
 }
