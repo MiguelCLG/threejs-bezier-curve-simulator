@@ -78,5 +78,6 @@ export default class Singleton {
     this.renderer.update();
     this.information.update();
     this.points.forEach((point) => point.update());
+    this.state.update();
   }
 }

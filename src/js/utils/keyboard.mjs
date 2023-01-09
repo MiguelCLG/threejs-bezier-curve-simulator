@@ -25,10 +25,12 @@ export default class Keyboard {
     this.information = this.singleton.information;
 
     // evento para quando a tecla é solta
-    document.body.addEventListener(
-      "keyup",
-      (e) => delete this.canPress[e.code]
-    );
+    document.body.addEventListener("keyup", (e) => {
+      delete this.canPress[e.code];
+      if (e.code === "KeyW" || e.code === "KeyS") {
+        this.singleton.state.resetTimer();
+      }
+    });
 
     // evento para quando a tecla é premida
     document.body.addEventListener("keydown", (e) =>

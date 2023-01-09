@@ -29,6 +29,8 @@ export default class StateManagement {
 
     // array de curvas criadas (ajuda para depois poder fazer reset)
     this.curves = [];
+    this.timer = 0;
+    this.moveSpeed = 0.1;
   }
 
   // Criação da curva de bezier
@@ -122,7 +124,8 @@ export default class StateManagement {
     if (!this.selectedPoint) return;
 
     // queremos apenas mover no eixo dos z
-    this.selectedPoint.pointObject.position.z += 0.1;
+    this.selectedPoint.pointObject.position.z += this.moveSpeed;
+    this.updateTimer();
 
     const { x, y, z } = this.selectedPoint.pointObject.position;
 
@@ -139,7 +142,8 @@ export default class StateManagement {
     if (!this.selectedPoint) return;
 
     // queremos apenas mover no eixo dos z
-    this.selectedPoint.pointObject.position.z -= 0.1;
+    this.selectedPoint.pointObject.position.z -= this.moveSpeed;
+    this.updateTimer();
 
     // queremos apenas mover no eixo dos z
     const { x, y, z } = this.selectedPoint.pointObject.position;
@@ -149,6 +153,13 @@ export default class StateManagement {
       point: this.selectedPoint.name,
       coordenates: `(${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`,
     });
+  }
+
+  updateTimer() {
+    this.timer += 0.016;
+  }
+  resetTimer() {
+    this.timer = 0;
   }
 
   // Remove as curvas e dá clean ao UI
@@ -165,5 +176,12 @@ export default class StateManagement {
   reset() {
     this.clearCurves();
     this.singleton.points.forEach((point) => point.reset());
+  }
+  update() {
+    if (this.timer > 1) {
+      this.moveSpeed = 0.5;
+    } else {
+      this.moveSpeed = 0.1;
+    }
   }
 }
